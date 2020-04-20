@@ -137,7 +137,7 @@
             if (typeof callback === "function") {
               that.$curChart = callback(canvas, res.width, res.height, canvasDpr);
             } else if (that.ec) {
-              that.$curChart = that.initChart(canvas, res.width, res.height, canvasDpr)
+              that.initChart(canvas, res.width, res.height, canvasDpr)
             } else {
               that.triggerEvent("init", {
                 canvas: canvas,
@@ -181,7 +181,7 @@
                 canvasDpr
               );
             } else if (that.ec) {
-              that.$curChart = that.initChart(canvas, canvasWidth, canvasHeight, canvasDpr)
+              that.initChart(canvas, canvasWidth, canvasHeight, canvasDpr)
             } else {
               that.triggerEvent("init", {
                 canvas: canvas,
