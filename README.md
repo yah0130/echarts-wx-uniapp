@@ -147,6 +147,124 @@ ECharts 中的绝大部分功能都支持小程序版本，因此这里仅说明
 原因： echart自身问题  
 解决方案：需要通过判断点击的位置来动态设置tooltip的position  
 
+3. 格式化需要传入function无效
+原因： 被序列化掉了
+解决方案：需要手动setOption，例子如下：
+
+```html
+<template>
+  <view>
+    <uni-ec-canvas class="uni-ec-canvas" id="line-chart" ref="canvas" canvas-id="lazy-load-chart" :ec="ec"></uni-ec-canvas>
+  </view>
+</template>
+
+<script>
+  import uniEcCanvas from '@/components/uni-ec-canvas/uni-ec-canvas'
+  import * as echarts from '@/components/uni-ec-canvas/echarts'
+  let chart = null
+  export default {
+    data() {
+      return {
+        ec: {
+          lazyLoad: true
+        },
+        option: {
+          title: {
+            text: ''
+          },
+          tooltip: {
+            trigger: 'axis',
+            formatter: '{b}\r\n{c0}人',
+            axisPointer: {
+              type: 'line',
+              axis: 'x',
+              label: {
+                backgroundColor: '#000000'
+              }
+            }
+          },
+          grid: {
+            left: '6%',
+            right: '6%',
+            top: '6%',
+            bottom: '6%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['2-12', '2-14', '2-16', '2-18', '2-20', '2-22', '2-24'],
+            axisLine: {
+              // y轴
+              show: false
+            },
+            axisTick: {
+              // y轴刻度线
+              show: false
+            },
+            splitLine: {
+              // 网格线
+              show: false
+            }
+          },
+          yAxis: {
+            type: 'value',
+            axisLine: {
+              // y轴
+              show: false
+            },
+            axisTick: {
+              // y轴刻度线
+              show: false
+            },
+            splitLine: {
+              // 网格线
+              show: false
+            }
+          },
+          series: [{
+            name: '浏览量',
+            type: 'line',
+            smooth: true,
+            lineStyle: {
+              color: '#EF5959'
+            },
+            data: [120, 132, 101, 134, 90, 230, 210]
+          }]
+        }
+      };
+    },
+    methods: {
+      initChart(canvas, width, height, canvasDpr) {
+        console.log(canvas, width, height, canvasDpr)
+        chart = echarts.init(canvas, null, {
+          width: width,
+          height: height,
+          devicePixelRatio: canvasDpr
+        })
+        canvas.setChart(chart)
+        chart.setOption(this.option)
+        return chart
+      },
+    },
+    onUnload() {
+      chart = null
+    },
+    onLoad() {
+      this.$refs.canvas.init(this.initChart)
+    }
+  }
+</script>
+
+<style scoped>
+  .uni-ec-canvas {
+    width: 100%;
+    height: 100vh; 
+    display: block;
+  }
+</style>
+```
+
 
 ### 饼状图  
 1. 饼装图在安卓机下颜色中间会有颜色填充 如下图所示  
