@@ -133,7 +133,7 @@ ECharts 中的绝大部分功能都支持小程序版本，因此这里仅说明
 
 ## issue 
 
-如本项目有问题，欢迎在[issue](https://github.com/Zhuyi731/echarts-for-wx-uniapp/issues) 中向我们反馈，谢谢！
+如本项目有问题，欢迎在[issue](https://github.com/yah0130/echarts-wx-uniapp/issues) 中向我们反馈，谢谢！
 
 ## 常见问题及解决方案
 以图形分类
